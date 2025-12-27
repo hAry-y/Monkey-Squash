@@ -15,6 +15,12 @@ run/main_scene="uid://dquafux3r5lbe"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[file_customization]
+
+folder_colors={
+"res://Afscenes/": "orange"
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
