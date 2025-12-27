@@ -12,4 +12,7 @@ script = ExtResource("1_beukm")
 shape = SubResource("CircleShape2D_rguqb")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(532, 117)
 texture = ExtResource("2_6hoqr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
