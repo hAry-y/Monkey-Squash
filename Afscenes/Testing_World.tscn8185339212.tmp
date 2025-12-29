@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3kpd07o4llts"]
+
+[ext_resource type="PackedScene" uid="uid://b2bj1g7dp5kor" path="res://Afscenes/TesterBilly.tscn" id="1_r20rr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_br1v0"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_tsj7c"]
+sky_material = SubResource("ProceduralSkyMaterial_br1v0")
+
+[sub_resource type="Environment" id="Environment_qbmqu"]
+background_mode = 2
+sky = SubResource("Sky_tsj7c")
+tonemap_mode = 2
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qbmqu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60498047, -0.63765216, -0.4998169)
+size = Vector3(9.262695, 1, 8.896851)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_r20rr")]

@@ -1,0 +1,125 @@
+[gd_scene load_steps=15 format=3 uid="uid://b2bj1g7dp5kor"]
+
+[ext_resource type="Script" uid="uid://cvggguwhs2f3b" path="res://Afscenes/tester_billy.gd" id="1_f2144"]
+[ext_resource type="Texture2D" uid="uid://cq507eb13di5c" path="res://Assets/Sprites/German_Soldier.png" id="1_rw2xi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2144"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(0, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4tyw"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(0, 192, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ce8af"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(0, 32, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_576tm"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(34, 32, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8u48"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(68, 32, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgf1u"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(102, 32, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvhtv"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(136, 32, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngnm1"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(170, 32, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wn53"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(0, 64, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkvjg"]
+atlas = ExtResource("1_rw2xi")
+region = Rect2(34, 64, 34, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y4tyw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2144")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4tyw")
+}],
+"loop": false,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ce8af")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_576tm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8u48")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgf1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvhtv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngnm1")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wn53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkvjg")
+}],
+"loop": false,
+"name": &"Shooting",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3wn53"]
+radius = 0.099121094
+height = 0.25689697
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_f2144")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_y4tyw")
+animation = &"Shooting"
+autoplay = "Idle"
+frame = 1
+frame_progress = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010061294, -0.030853271, 0)
+shape = SubResource("CapsuleShape3D_3wn53")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9299499, 0.36768633, 0, -0.36768633, 0.9299499, 0, 0.43130684, 0.74384826)
