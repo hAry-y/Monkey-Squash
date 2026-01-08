@@ -3,6 +3,7 @@ extends CharacterBody3D
 var speed = 6.0
 var acceleration = 5.0
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+@export var jump_velocity = 4.5
 
 @onready var jump_area = $JumpArea
 
@@ -28,6 +29,10 @@ func _physics_process(delta):
 		input_dir.x -= 1
 	if Input.is_action_pressed("ui_left"):
 		input_dir.x += 1
+
+
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_velocity
 
 	input_dir = input_dir.normalized()
 	var direction = Vector3(input_dir.x, 0, input_dir.y)
