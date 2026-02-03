@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://drdybprepawy2"]
+
+[ext_resource type="Script" uid="uid://78lo7p80ojvr" path="res://SceneHari/enemy_ai.gd" id="1_qgj3k"]
+[ext_resource type="Script" uid="uid://ch25ahl4wg8um" path="res://SceneHari/ray_cast_3d.gd" id="2_5tlv6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qgj3k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5tlv6"]
+albedo_color = Color(0.41960785, 1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0cnej"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rj7tt"]
+
+[node name="EnemyBody3D" type="CharacterBody3D"]
+script = ExtResource("1_qgj3k")
+monkey_scene = null
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_qgj3k")
+surface_material_override/0 = SubResource("StandardMaterial3D_5tlv6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_0cnej")
+
+[node name="LOSRay" type="RayCast3D" parent="."]
+transform = Transform3D(0.49344096, 0, 0.8697793, 0, 1, 0, -0.8697793, 0, 0.49344096, 0, 0.15696877, 0)
+target_position = Vector3(0, 0, 7.39)
+script = ExtResource("2_5tlv6")
+
+[node name="SearchArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SearchArea"]
+transform = Transform3D(9.405, 0, 0, 0, 9.405, 0, 0, 0, 9.405, 0, 0, 0)
+shape = SubResource("SphereShape3D_rj7tt")
+debug_color = Color(0, 0.59607846, 0.73333335, 0.6901961)

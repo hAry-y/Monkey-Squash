@@ -3,7 +3,7 @@ extends CharacterBody3D
 var speed = 6.0
 var acceleration = 5.0
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-@export var jump_velocity = 4.5
+@export var jump_velocity = 6
 
 @onready var jump_area = $JumpArea
 
