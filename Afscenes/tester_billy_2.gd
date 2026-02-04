@@ -1,12 +1,20 @@
 extends CharacterBody3D
 
 @export var speed = 50
+@export var rotation_speed = 10.0
+
+@onready var spring_arm = $SpringArm3D
 
 # --- Camera & Aiming Setup ---
 @onready var camera_node = $SpringArm3D/CameraSocket/Camera3D
 var is_aiming = false
 var default_fov = 105.0
-var aim_fov = 30.0 
+var aim_fov = 30.0
+var mouse_sensitivity = 0.15
+var camera_tilt_limit = 70.0
+var pitch: float = -25.0
+var yaw: float = 0.0
+@onready var reticle = $HUD/Reticle 
 
 # Offset for "Over the Shoulder" (Right side, slightly forward)
 var default_offset = Vector3(0, 0, 0)
@@ -32,6 +40,13 @@ var aim_rotation_x = 0.0      # Almost flat (0 is perfectly straight forward)
 
 # Current facing direction (Default: down)
 var current_facing = "down" 
+
+func _ready() -> void:
+	reticle.visible = false
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pitch = spring_arm.rotation_degrees.x
+	yaw = spring_arm.rotation_degrees.y
 
 func _physics_process(_delta):
 	# 1. Check Aim Input (New Logic)
@@ -72,6 +87,14 @@ func handle_aiming_input():
 
 func toggle_aim(state: bool):
 	is_aiming = state
+	reticle.visible = state
+	
+	if state:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		# Optional: Reset spring arm rotation when stopping aim
+		spring_arm.rotation_degrees = Vector3.ZERO       
 	
 	var tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE)
 	
@@ -89,6 +112,18 @@ func toggle_aim(state: bool):
 		
 		# ROTATE DOWN: Back to HD-2D isometric view
 		tween.tween_property(camera_node, "rotation_degrees:x", default_rotation_x, 0.2)
+		
+# NEW: The rotation logic
+func _unhandled_input(event):
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		
+		yaw -= event.relative.x * mouse_sensitivity
+		pitch -= event.relative.y * mouse_sensitivity
+		
+		pitch = clamp(pitch, -camera_tilt_limit, camera_tilt_limit)
+		
+		spring_arm.rotation_degrees.x = pitch
+		spring_arm.rotation_degrees.y = yaw
 
 func update_visuals(move_vec: Vector3):
 	# PRIORITY 1: If Aiming, force the "up" (Back View) sprite
